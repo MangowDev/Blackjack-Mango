@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="styles/style.css" rel="stylesheet" />
+    <title>Blackjack Mango</title>
+    <script src="javascript/underscore.js"></script>
+  </head>
+  <body>
+    <audio src="ruta-del-audio.mp3" autoplay loop>
+      Tu navegador no soporta la etiqueta de audio.
+    </audio>
+    <div class="croupier-bar-div">
+      <h2>Croupier</h2>
+    </div>
+    <div class="table-div">
+      <div class="croupier-div">
+        <button id="btnNuevo" class="action-button-new-game">
+          Nueva partida
+        </button>
+        <div class="croupier-cards-div">
+          <div class="croupier-number-div">
+            <span class="number-span">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="action-buttons-div">
+        <button id="btnPedir" class="action-button">Pedir carta</button>
+        <button id="btnPasar" class="action-button">Pasar</button>
+        <button id="btnDoblar" class="action-button-double">Doble X2</button>
+      </div>
+      <div class="player-cards-div">
+        <div class="player-number-div">
+          <span class="number-span">0</span>
+        </div>
+      </div>
+    </div>
+    <div class="player-bar-div">
+      <h2>Jugador 1</h2>
+    </div>
+    <script src="javascript/game.js"></script>
+  </body>
+</html>
