@@ -76,31 +76,31 @@ body {
 }
 
 .croupier-cards-div {
-  min-height: 235px;
+  min-height: 200px;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .croupier-cards-div img{
-  width: 150px;
-  height: 220px;
-  margin-left: -120px;
+  width: 120px;
+  height: 190px;
+  margin-left: -98px;
   padding-top: 15px;
 }
 
 .player-cards-div {
-  min-height: 235px;
-  margin-right: 250px;
+  min-height: 200px;
+  margin-right: 200px;
   width: auto;
   display: flex;
   justify-content: center;
 }
 
 .player-cards-div img{
-  width: 150px;
-  height: 220px;
-  margin-right: -120px;
+  width: 120px;
+  height: 190px;
+  margin-right: -98px;
   padding-bottom: 15px;
 }
 
@@ -111,8 +111,8 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 50px;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 50px;
   background-color: rgba(0, 0, 0, 0.4);
   border: 5px solid yellow;
@@ -125,8 +125,8 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   margin-right: 50px;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 50px;
   background-color: rgba(0, 0, 0, 0.4);
   border: 5px solid yellow;
@@ -149,7 +149,7 @@ body {
   background-color: #314DC0;
   border: 2px solid #243b94;
   outline: none;
-  font-size: 28px;
+  font-size: 22px;
   width: auto;
 }
 
@@ -161,10 +161,10 @@ body {
   padding: 10px;
   margin: 0 10px;
   border-radius: 10px;
-  background-color: #dac90b;
-  border: 2px solid #a99c09;
+  background-color: #f7b00b;
+  border: 2px solid #ba860c;
   outline: none;
-  font-size: 28px;
+  font-size: 22px;
   width: auto;
 }
 .action-button-new-game{
@@ -178,13 +178,13 @@ body {
   border: 2px solid #811212;
   margin: auto 10px;
   outline: none;
-  font-size: 28px;
-  width: 250px;
+  font-size: 22px;
+  width: 200px;
 }
 
 .number-span {
   font-family: "Fredoka", sans-serif;
   font-weight: 600;
   color: white;
-  font-size: 40px;
+  font-size: 30px;
 }

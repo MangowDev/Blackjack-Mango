@@ -1,10 +1,13 @@
-// Definicion de variables globales
-let baraja = [];
-let tipoCarta = ["C", "D", "P", "T"];
-let especiales = ["A", "K", "Q", "J"];
-let puntosJugador = 0;
-let puntosCroupier = 0;
+import Baraja from "./class/baraja.js";
+import Jugador from "./class/jugador.js";
+import Croupier from "./class/croupier.js";
 
+// Inicialización de objetos globales
+let baraja = new Baraja();
+let jugador = new Jugador("Jugador 1");
+let croupier = new Croupier();
+
+// Referencias a elementos del DOM
 const botonPedir = document.querySelector("#btnPedir");
 const botonPasar = document.querySelector("#btnPasar");
 const botonNuevo = document.querySelector("#btnNuevo");
@@ -24,52 +27,34 @@ perdedor.style.color = "red";
 
 const empate1 = document.createElement("h2");
 empate1.textContent = "Empate";
-empate1.style.color = "darkblue";
-ganador.style.marginLeft = "10px";
-ganador.style.marginRight = "10px";
-
+empate1.style.color = "#314DC0";
 const empate2 = document.createElement("h2");
 empate2.textContent = "Empate";
-empate2.style.color = "darkblue";
-ganador.style.marginRight = "10px";
-ganador.style.marginLeft = "10px";
+empate2.style.color = "#314DC0";
 
 // Crear baraja para comenzar a repartir cartas
-
 const crearBaraja = () => {
-  for (let i = 2; i <= 10; i++) {
-    for (let tipo of tipoCarta) {
-      baraja.push(i + tipo);
-    }
-  }
-
-  for (let tipo of tipoCarta) {
-    for (let esp of especiales) {
-      baraja.push(esp + tipo);
-    }
-  }
-
-  baraja = _.shuffle(baraja);
-  return baraja;
+  baraja.crearBaraja();
+  baraja.baraja = _.shuffle(baraja.baraja);
 };
 
-// Pedir una carta y retirar de la baraja
-const pedirCarta = () => {
-  const carta = baraja.pop();
-  if (baraja.length === 0) {
-    throw "No hay cartas";
+// Inicializa el juego
+const inicializarJuego = () => {
+  crearBaraja();
+  for (let i = 0; i < 2; i++) {
+    pedirCartaJugador();
+    pedirCartaCroupier();
   }
-
-  return carta;
+  actualizarMarcador();
 };
 
-// Calculamos el valor de la carta
-const valorCarta = (carta) => {
-  let puntos = carta.substring(0, carta.length - 1);
-  let valor = isNaN(puntos) ? (puntos === "A" ? 11 : 10) : puntos * 1;
-  return valor;
+// Actualiza el marcador en el DOM
+const actualizarMarcador = () => {
+  marcador[0].innerHTML = croupier.obtenerPuntos();
+  marcador[1].innerHTML = jugador.obtenerPuntos();
 };
 
+// Funciones para el estilo de ganador
 const estiloGanadorJugador = () => {
   ganador.style.marginLeft = "10px";
   perdedor.style.marginRight = "10px";
@@ -88,66 +73,73 @@ const estiloGanadorCroupier = () => {
   divJugadorBarra.append(perdedor);
 };
 
+const estiloEmpate = () => {
+  empate1.style.marginRight = "10px";
+  empate2.style.marginLeft = "10px";
+  empate1.classList.add("resultado");
+  empate2.classList.add("resultado");
+  divCroupierBarra.insertAdjacentElement("afterbegin", empate1);
+  divJugadorBarra.append(empate2);
+};
+
+// Funciones de interacción del jugador
 const pedirCartaJugador = () => {
-  const carta = pedirCarta();
-  puntosJugador += valorCarta(carta);
-  marcador[1].innerHTML = puntosJugador;
+  const carta = baraja.pedirCarta();
+  jugador.agregarCarta(carta);
   const imgCarta = document.createElement("img");
   imgCarta.src = "assets/cartas/" + carta + ".png";
   imgCarta.classList.add("carta");
   divJugadorCarta.append(imgCarta);
+  actualizarMarcador();
+  evaluarEstadoJugador();
 };
 
-const pedirCartaCroupier = () => {
-  const cartaB = pedirCarta();
-  puntosCroupier += valorCarta(cartaB);
-  marcador[0].innerHTML = puntosCroupier;
-  const imgCartaB = document.createElement("img");
-  imgCartaB.src = "assets/cartas/" + cartaB + ".png";
-  imgCartaB.classList.add("carta");
-  divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
-};
-
-const pedirCartaCroupierPrimera = () => {
-  const cartaB = pedirCarta();
-  puntosCroupier += valorCarta(cartaB);
-  marcador[0].innerHTML = puntosCroupier;
-  const imgCartaB = document.createElement("img");
-  imgCartaB.src = "assets/cartas/reverso-rojo.png";
-  imgCartaB.classList.add("carta");
-  divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
-};
-
-botonPedir.addEventListener("click", () => {
-  pedirCartaJugador();
-  if (puntosJugador > 21) {
+const evaluarEstadoJugador = () => {
+  if (jugador.obtenerPuntos() > 21) {
     estiloGanadorCroupier();
     botonPedir.disabled = true;
     botonPasar.disabled = true;
-  } else if (puntosJugador === 21) {
+  } else if (jugador.obtenerPuntos() === 21) {
     estiloGanadorJugador();
     botonPedir.disabled = true;
     botonPasar.disabled = true;
-    turnoCroupier(puntosJugador);
+    turnoCroupier();
   }
+};
+
+const pedirCartaCroupier = () => {
+  const carta = baraja.pedirCarta();
+  croupier.agregarCarta(carta);
+  const imgCartaB = document.createElement("img");
+  imgCartaB.src = "assets/cartas/" + carta + ".png";
+  imgCartaB.classList.add("carta");
+  divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
+  actualizarMarcador();
+};
+
+// Funciones de botones
+botonPedir.addEventListener("click", () => {
+  pedirCartaJugador();
 });
 
 botonPasar.addEventListener("click", () => {
   botonPedir.disabled = true;
   botonPasar.disabled = true;
-  turnoCroupier(puntosJugador);
+  turnoCroupier();
 });
 
 botonNuevo.addEventListener("click", () => {
-  botonPedir.disabled = false;
-  botonPasar.disabled = false;
-  baraja = [];
-  crearBaraja();
-  puntosJugador = 0;
-  puntosCroupier = 0;
-  marcador[0].innerHTML = "0";
-  marcador[1].innerHTML = "0";
+  // Reiniciar la lógica del juego
+  jugador.reiniciarCartas();
+  croupier.reiniciarCartas();
+  baraja.reiniciarBaraja();
+  botonPedir.disabled = false; 
+  botonPasar.disabled = false; 
 
+  // Reiniciar puntos
+  jugador.puntos = 0; 
+  croupier.puntos = 0; 
+  
   const imgsJugador = divJugadorCarta.querySelectorAll("img");
   imgsJugador.forEach((img) => img.remove());
 
@@ -159,20 +151,19 @@ botonNuevo.addEventListener("click", () => {
 
   const resultadoJugador = divJugadorBarra.querySelectorAll(".resultado");
   resultadoJugador.forEach((element) => element.remove());
-
-  cartaInicial();
+  
+  marcador[0].innerHTML = croupier.obtenerPuntos();
+  marcador[1].innerHTML = jugador.obtenerPuntos();
+  
+  inicializarJuego(); // Comenzar una nueva partida
 });
 
-const turnoCroupier = (puntosJugador) => {
+// Turno del croupier
+const turnoCroupier = () => {
   const pedirCartasCroupier = () => {
-    if (puntosCroupier < 17 || puntosCroupier < puntosJugador) {
-      if (puntosCroupier <= puntosJugador && puntosJugador <= 21) {
-        pedirCartaCroupier();
-
-        setTimeout(pedirCartasCroupier, 1000);
-      } else {
-        evaluarResultado();
-      }
+    if (croupier.obtenerPuntos() < 17) {
+      pedirCartaCroupier();
+      setTimeout(pedirCartasCroupier, 1000);
     } else {
       evaluarResultado();
     }
@@ -181,40 +172,18 @@ const turnoCroupier = (puntosJugador) => {
   pedirCartasCroupier();
 };
 
+// Evaluar el resultado del juego
 const evaluarResultado = () => {
-  if (puntosJugador > 21) {
+  if (jugador.obtenerPuntos() > 21) {
     estiloGanadorCroupier();
-  } else if (puntosCroupier === puntosJugador) {
-    if (puntosCroupier === 21 && puntosJugador === 21) {
-      console.log("repartimos ganancias");
-    } else {
-      empate1.classList.add("resultado");
-      empate2.classList.add("resultado");
-      divCroupierBarra.insertAdjacentElement("afterbegin", empate1);
-      divJugadorBarra.append(empate2);
-    }
-  } else if (puntosCroupier > puntosJugador && puntosCroupier <= 21) {
-    estiloGanadorCroupier();
-  } else if (puntosCroupier > 21) {
+  } else if (croupier.obtenerPuntos() > 21 || jugador.obtenerPuntos() > croupier.obtenerPuntos()) {
     estiloGanadorJugador();
+  } else if (croupier.obtenerPuntos() === jugador.obtenerPuntos()) {
+    estiloEmpate();
   } else {
-    estiloGanadorJugador();
-  }
-};
-
-
-const cartaInicial = () => {
-  for (let i = 0; i < 2; i++) {
-    pedirCartaJugador();
-    pedirCartaCroupier();
-  }
-
-  if (puntosCroupier === 21) {
     estiloGanadorCroupier();
-  } else if (puntosJugador === 21) {
-    estiloGanadorJugador();
   }
 };
 
-crearBaraja();
-cartaInicial();
+// Inicializa el juego
+inicializarJuego();
