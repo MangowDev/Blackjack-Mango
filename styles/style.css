@@ -23,6 +23,7 @@ body {
 .croupier-bar-div h2{
   font-size: 30px;
   font-family: "Fredoka", sans-serif;
+  font-weight: 500;
   color: white;
   text-align: center;
 }
@@ -48,6 +49,7 @@ body {
 .player-bar-div h2{
   font-size: 30px;
   font-family: "Fredoka", sans-serif;
+  font-weight: 500;
   color: white;
   text-align: center;
 }
@@ -83,10 +85,16 @@ body {
 }
 
 .croupier-cards-div img{
-  width: 120px;
-  height: 190px;
-  margin-left: -98px;
+  width: 150px;
+  height: 220px;
+  margin-left: -120px;
   padding-top: 15px;
+}
+
+.player-div{
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .player-cards-div {
@@ -100,7 +108,7 @@ body {
 .player-cards-div img{
   width: 120px;
   height: 190px;
-  margin-right: -98px;
+  margin-right: -95px;
   padding-bottom: 15px;
 }
 

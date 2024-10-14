@@ -20,21 +20,17 @@ const divCroupierBarra = document.querySelector(".croupier-bar-div");
 const ganador = document.createElement("h2");
 ganador.textContent = "Gana";
 ganador.style.color = "lightgreen";
-ganador.style.textDecoration = "underline";
 
 const perdedor = document.createElement("h2");
 perdedor.textContent = "Pierde";
 perdedor.style.color = "red";
-perdedor.style.textDecoration = "underline";
 
 const empate1 = document.createElement("h2");
 empate1.textContent = "Empate";
-empate1.style.color = "#3172C0";
-empate1.style.textDecoration = "underline";
+empate1.style.color = "#314DC0";
 const empate2 = document.createElement("h2");
 empate2.textContent = "Empate";
-empate2.style.color = "#3172C0";
-empate2.style.textDecoration = "underline";
+empate2.style.color = "#314DC0";
 
 // Crear baraja para comenzar a repartir cartas
 const crearBaraja = () => {
@@ -47,16 +43,9 @@ const inicializarJuego = () => {
   crearBaraja();
   for (let i = 0; i < 2; i++) {
     pedirCartaJugador();
+    pedirCartaCroupier();
   }
-  pedirPrimeraCartaCroupier();
-  pedirCartaCroupier();
   actualizarMarcador();
-
-  if (croupier.puntos === 21) {
-    estiloGanadorCroupier();
-  } else if (jugador.puntos === 21) {
-    estiloGanadorJugador();
-  }
 };
 
 // Actualiza el marcador en el DOM
@@ -110,47 +99,23 @@ const evaluarEstadoJugador = () => {
     estiloGanadorCroupier();
     botonPedir.disabled = true;
     botonPasar.disabled = true;
-    revelarCarta();
   } else if (jugador.obtenerPuntos() === 21) {
+    estiloGanadorJugador();
     botonPedir.disabled = true;
     botonPasar.disabled = true;
     turnoCroupier();
   }
 };
 
-const pedirPrimeraCartaCroupier = () => {
-  const carta = baraja.pedirCarta();
-  croupier.agregarCartaOculta(carta); 
-  const imgCartaB = document.createElement("img");
-  imgCartaB.src = "assets/cartas/reverso-rojo.png"; 
-  imgCartaB.classList.add("carta");
-  imgCartaB.id = "carta-oculta"; 
-  divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
-};
-
 const pedirCartaCroupier = () => {
   const carta = baraja.pedirCarta();
-  croupier.agregarCarta(carta); 
+  croupier.agregarCarta(carta);
   const imgCartaB = document.createElement("img");
-  imgCartaB.src = "assets/cartas/" + carta + ".png"; 
+  imgCartaB.src = "assets/cartas/" + carta + ".png";
   imgCartaB.classList.add("carta");
   divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
   actualizarMarcador();
 };
-
-const revelarCarta = () => {
-  croupier.revelarCartaOculta(); 
-
-  const imgCartaOculta = document.querySelector("#carta-oculta");
-
-  if (imgCartaOculta) {
-    const valorOculta = croupier.cartas[0]; 
-    imgCartaOculta.src = "assets/cartas/" + valorOculta + ".png"; 
-  }
-
-  actualizarMarcador();
-};
-
 
 // Funciones de botones
 botonPedir.addEventListener("click", () => {
@@ -190,49 +155,33 @@ botonNuevo.addEventListener("click", () => {
   marcador[0].innerHTML = croupier.obtenerPuntos();
   marcador[1].innerHTML = jugador.obtenerPuntos();
   
-  inicializarJuego(); 
+  inicializarJuego(); // Comenzar una nueva partida
 });
 
 // Turno del croupier
 const turnoCroupier = () => {
   const pedirCartasCroupier = () => {
-    setTimeout(() => {
-      revelarCarta(); 
-      if (croupier.obtenerPuntos() < 17) {
-        if (croupier.obtenerPuntos() <= jugador.obtenerPuntos() && jugador.obtenerPuntos() <= 21) {
-          setTimeout(() => {
-            pedirCartaCroupier();
-            pedirCartasCroupier(); 
-          }, 1000); 
-        } else {
-          evaluarResultado(); 
-        }
-      } else {
-        evaluarResultado(); 
-      }
-    }, 200); 
+    if (croupier.obtenerPuntos() < 17) {
+      pedirCartaCroupier();
+      setTimeout(pedirCartasCroupier, 1000);
+    } else {
+      evaluarResultado();
+    }
   };
 
-  pedirCartasCroupier(); 
+  pedirCartasCroupier();
 };
-
 
 // Evaluar el resultado del juego
 const evaluarResultado = () => {
   if (jugador.obtenerPuntos() > 21) {
     estiloGanadorCroupier();
+  } else if (croupier.obtenerPuntos() > 21 || jugador.obtenerPuntos() > croupier.obtenerPuntos()) {
+    estiloGanadorJugador();
   } else if (croupier.obtenerPuntos() === jugador.obtenerPuntos()) {
-    if (croupier.obtenerPuntos() === 21 && jugador.obtenerPuntos() === 21) {
-      estiloEmpate();
-    } else {
-      estiloEmpate();
-    }
-  } else if (croupier.obtenerPuntos() > jugador.obtenerPuntos() && croupier.obtenerPuntos() <= 21) {
-    estiloGanadorCroupier();
-  } else if (croupier.obtenerPuntos() > 21) {
-    estiloGanadorJugador();
+    estiloEmpate();
   } else {
-    estiloGanadorJugador();
+    estiloGanadorCroupier();
   }
 };
 

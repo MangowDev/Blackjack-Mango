@@ -12,14 +12,14 @@ class Croupier {
   
     agregarCartaOculta(carta) {
       this.cartaOculta = carta;
-      this.cartas.push("Oculta"); // Añade un marcador de carta oculta
-      this.puntos += this.calcularPuntos(carta);
+      this.cartas.push("Oculta"); 
     }
   
     revelarCartaOculta() {
       if (this.cartaOculta) {
-        this.cartas[0] = this.cartaOculta; // Reemplaza la 'Oculta' por la carta real
-        this.cartaOculta = null;
+        this.cartas[0] = this.cartaOculta; 
+        this.puntos += this.calcularPuntos(this.cartaOculta); 
+        this.cartaOculta = null; 
       }
     }
   
