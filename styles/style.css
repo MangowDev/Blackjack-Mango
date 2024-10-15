@@ -49,7 +49,7 @@ body {
 }
 
 .player-title-h2{
-  font-size: 22px;
+  font-size: 24px;
   font-family: "Fredoka", sans-serif;
   font-weight: 500;
   margin: auto 0;
@@ -112,9 +112,9 @@ body {
   flex: 1; 
   display: flex;
   justify-content: center; 
-  margin: 0;
+  margin: 0 10px;
+  max-width: 150px;
   margin-right: 100px; 
-  max-width: 150px; 
 }
 
 .player-cards-div img{
@@ -238,7 +238,7 @@ body {
 
 
 .active-player {
-  font-size: 22px;
+  font-size: 26px;
   font-family: "Fredoka", sans-serif;
   font-weight: 500;
   margin: auto 0;
@@ -247,7 +247,7 @@ body {
 }
 
 .winner {
-  font-size: 22px;
+  font-size: 24px;
   font-family: "Fredoka", sans-serif;
   font-weight: 500;
   margin: auto 10px;
@@ -256,7 +256,7 @@ body {
 }
 
 .loser {
-  font-size: 22px;
+  font-size: 24px;
   font-family: "Fredoka", sans-serif;
   font-weight: 500;
   margin: auto 10px;
@@ -265,7 +265,7 @@ body {
 }
 
 .draw{
-  font-size: 22px;
+  font-size: 24px;
   font-family: "Fredoka", sans-serif;
   font-weight: 500;
   margin: auto 10px;
