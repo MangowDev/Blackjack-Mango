@@ -1,1 +1,1 @@
-- Si el croupier tiene 21 desde el inicio, que gane la partida directamente.
+- Si tocan dos ases, el jugador tiene 22 desde el inicio, lo cual no deberia pasar.
