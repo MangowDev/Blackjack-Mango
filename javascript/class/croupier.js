@@ -59,7 +59,7 @@ class Croupier {
 
   // Lógica del turno del croupier
   jugarTurno(puntosJugador, baraja) {
-    // El croupier sigue tomando cartas hasta tener al menos 17 puntos o hasta que los puntos del jugador sean mayores a 21
+    // El croupier sigue pidiendo cartas hasta tener al menos 17 puntos o hasta que los puntos del jugador sean mayores a 21
     while (
       this.puntos < 17 &&
       this.puntos <= puntosJugador &&

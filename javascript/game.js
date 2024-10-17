@@ -157,7 +157,7 @@ const pedirCartaJugador = (index) => {
   // Creamos elemento imagen con la imagen de la carta en cuestion, y la agregamos al jugador correspondiente
   const imgCarta = document.createElement("img");
   imgCarta.src = "assets/cartas/" + carta + ".png";
-  imgCarta.classList.add("carta"); // Añadimos la clase 'carta'
+  imgCarta.classList.add("carta"); 
 
   const jugadorDiv = document.querySelector(`#player-cards-${index + 1}`);
 
@@ -165,7 +165,7 @@ const pedirCartaJugador = (index) => {
     // Mostrar carta en el DOM
     jugadorDiv.appendChild(imgCarta);
 
-    // Usamos un pequeño retraso para aplicar la clase de animación después de insertar la carta en el DOM
+    // Inciamos la animacion añadiendo la clase "appear"
     setTimeout(() => {
       imgCarta.classList.add("appear"); 
     }, 10); 
@@ -230,7 +230,7 @@ const pedirPrimeraCartaCroupier = () => {
   imgCartaB.id = "carta-oculta";
   divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
 
-  // Iniciar la animación añadiendo la clase 'appearC'
+  // Iniciamos la animación añadiendo la clase 'appearC'
   setTimeout(() => {
     imgCartaB.classList.add("appearC");
   }, 10); 
@@ -245,11 +245,9 @@ const pedirCartaCroupier = () => {
   const imgCartaB = document.createElement("img");
   imgCartaB.src = "assets/cartas/" + carta + ".png";
   imgCartaB.classList.add("carta");
-  
-  // Agregar la carta a la vista antes de aplicar la animación
   divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
 
-  // Iniciar la animación añadiendo la clase 'appearC'
+  // Iniciamos la animación añadiendo la clase 'appearC'
   setTimeout(() => {
     imgCartaB.classList.add("appearC");
   }, 10); 
@@ -361,7 +359,7 @@ const turnoCroupier = () => {
       revelarCarta();
 
       setTimeout(() => {
-        // Pedir carta si menos de 17
+        // Pedir carta si el croupier tiene menos de 17
         if (croupier.obtenerPuntos() < 17) {
           pedirCartaCroupier();
 
