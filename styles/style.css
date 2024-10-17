@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 
 html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%; 
+  height: 100%;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   background-image: url("/assets/bg_images/background2.jpg");
   background-size: cover;
   overflow-x: hidden;
@@ -20,7 +20,7 @@ body {
   background: linear-gradient(to bottom, #461902 0%, #331201 100%);
 }
 
-.croupier-bar-div h2{
+.croupier-bar-div h2 {
   font-size: 30px;
   font-family: "Fredoka", sans-serif;
   font-weight: 500;
@@ -48,7 +48,7 @@ body {
   background: linear-gradient(to bottom, #461902 0%, #331201 100%);
 }
 
-.player-title-h2{
+.player-title-h2 {
   font-size: 24px;
   font-family: "Fredoka", sans-serif;
   font-weight: 500;
@@ -67,7 +67,7 @@ body {
   background: linear-gradient(to right, #cc0000 0%, #8b0000 100%);
 }
 
-.player-title-div{
+.player-title-div {
   width: auto;
   display: flex;
 }
@@ -80,7 +80,7 @@ body {
   width: 100%;
 }
 
-.croupier-div{
+.croupier-div {
   width: 100%;
   display: flex;
 }
@@ -92,36 +92,85 @@ body {
   justify-content: center;
 }
 
-.croupier-cards-div img{
+.croupier-cards-div img {
   width: 120px;
   height: auto;
   margin-left: -98px;
   padding-top: 15px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.croupier-cards-div img.appearC {
+  opacity: 1;
+  transform: translateY(0);
+  animation: appearC 0.3s ease-out forwards;
+}
+
+@keyframes appearC {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .player-div {
   width: 100%;
   display: flex;
-  justify-content: space-evenly; 
-  align-items: center; 
+  justify-content: space-evenly;
+  align-items: center;
   padding: 0;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .player-cards-div {
-  flex: 1; 
+  flex: 1;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   margin: 0 10px;
-  max-width: 150px;
-  margin-right: 100px; 
+  max-width: 170px;
+  margin-right: 100px;
 }
 
-.player-cards-div img{
+.player-cards-div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin: 0 10px;
+  max-width: 170px;
+  margin-right: 100px;
+}
+
+.player-cards-div img {
   width: 100px;
   height: 150px;
   margin-right: -80px;
   padding-bottom: 15px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.player-cards-div img.appear {
+  opacity: 1;
+  transform: translateY(0);
+  animation: appear 0.3s ease-out forwards;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .croupier-number-div {
@@ -152,7 +201,7 @@ body {
   border: 5px solid yellow;
 }
 
-.action-buttons-div{
+.action-buttons-div {
   width: 100%;
   justify-content: center;
   display: flex;
@@ -166,19 +215,19 @@ body {
   padding: 10px;
   margin: 0 10px;
   border-radius: 10px;
-  background-color: #314DC0;
+  background-color: #314dc0;
   border: 2px solid #243b94;
   outline: none;
   font-size: 22px;
   width: auto;
-  transition: transform 0.2s; 
+  transition: transform 0.2s;
 }
 
 .action-button:hover {
   background-color: #395be5;
   border: 2px solid #3155e4;
   transform: scale(1.05);
-  transition: 0.2s; 
+  transition: 0.2s;
 }
 
 .action-button-double {
@@ -194,16 +243,15 @@ body {
   outline: none;
   font-size: 22px;
   width: auto;
-  transition: transform 0.2s; 
+  transition: transform 0.2s;
 }
 
 .action-button-double:hover {
   background-color: #f7bc0b;
   border: 2px solid #e0a10e;
-  transform: scale(1.05); 
-  transition: 0.2s; 
+  transform: scale(1.05);
+  transition: 0.2s;
 }
-
 
 .action-button-new-game {
   color: white;
@@ -218,16 +266,15 @@ body {
   outline: none;
   font-size: 22px;
   width: 200px;
-  transition: transform 0.2s; 
+  transition: transform 0.2s;
 }
 
 .action-button-new-game:hover {
-  background-color: #c02121; 
-  border: 2px solid #a11818; 
+  background-color: #c02121;
+  border: 2px solid #a11818;
   transform: scale(1.05);
-  transition: 0.2s; 
+  transition: 0.2s;
 }
-
 
 .number-span {
   font-family: "Fredoka", sans-serif;
@@ -235,7 +282,6 @@ body {
   color: white;
   font-size: 28px;
 }
-
 
 .active-player {
   font-size: 26px;
@@ -264,11 +310,11 @@ body {
   text-align: center;
 }
 
-.draw{
+.draw {
   font-size: 24px;
   font-family: "Fredoka", sans-serif;
   font-weight: 500;
   margin: auto 10px;
-  color: #3172C0;
+  color: #3172c0;
   text-align: center;
 }

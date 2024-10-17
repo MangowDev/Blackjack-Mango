@@ -157,12 +157,18 @@ const pedirCartaJugador = (index) => {
   // Creamos elemento imagen con la imagen de la carta en cuestion, y la agregamos al jugador correspondiente
   const imgCarta = document.createElement("img");
   imgCarta.src = "assets/cartas/" + carta + ".png";
-  imgCarta.classList.add("carta");
+  imgCarta.classList.add("carta"); // Añadimos la clase 'carta'
+
   const jugadorDiv = document.querySelector(`#player-cards-${index + 1}`);
 
   if (jugadorDiv) {
     // Mostrar carta en el DOM
     jugadorDiv.appendChild(imgCarta);
+
+    // Usamos un pequeño retraso para aplicar la clase de animación después de insertar la carta en el DOM
+    setTimeout(() => {
+      imgCarta.classList.add("appear"); 
+    }, 10); 
   }
 
   // Actualizar puntajes
@@ -171,6 +177,7 @@ const pedirCartaJugador = (index) => {
   // Evaluar estado del jugador
   evaluarEstadoJugador(index);
 };
+
 
 // Método para resaltar al jugador activo
 const resaltarJugadorActivo = () => {
@@ -222,9 +229,14 @@ const pedirPrimeraCartaCroupier = () => {
   imgCartaB.classList.add("carta");
   imgCartaB.id = "carta-oculta";
   divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
+
+  // Iniciar la animación añadiendo la clase 'appearC'
+  setTimeout(() => {
+    imgCartaB.classList.add("appearC");
+  }, 10); 
 };
 
-// Metodo para que el cropuier pida carta
+// Método para que el croupier pida carta
 const pedirCartaCroupier = () => {
   const carta = baraja.pedirCarta();
   croupier.agregarCarta(carta);
@@ -233,7 +245,14 @@ const pedirCartaCroupier = () => {
   const imgCartaB = document.createElement("img");
   imgCartaB.src = "assets/cartas/" + carta + ".png";
   imgCartaB.classList.add("carta");
+  
+  // Agregar la carta a la vista antes de aplicar la animación
   divCroupierCarta.insertAdjacentElement("afterbegin", imgCartaB);
+
+  // Iniciar la animación añadiendo la clase 'appearC'
+  setTimeout(() => {
+    imgCartaB.classList.add("appearC");
+  }, 10); 
 
   // Actualizar puntajes
   actualizarMarcador();
@@ -260,13 +279,9 @@ const revelarCarta = () => {
 botonPedir.addEventListener("click", () => {
   // Pedir carta al jugador
   pedirCartaJugador(contadorJugadores);
-  ç;
 
   // Si el jugador tiene 21 o más
-  if (
-    jugadores[contadorJugadores].puntos === 21 ||
-    jugadores[contadorJugadores].puntos > 21
-  ) {
+  if (jugadores[contadorJugadores].puntos === 21 || jugadores[contadorJugadores].puntos > 21) {
     // Pasar al siguiente jugador
     contadorJugadores++;
     resaltarJugadorActivo();
@@ -285,6 +300,7 @@ botonPasar.addEventListener("click", () => {
     jugadores[contadorJugadores].puntos === 21
   ) {
     contadorJugadores++;
+    resaltarJugadorActivo();
   }
 
   if (contadorJugadores >= jugadores.length) {
@@ -338,6 +354,7 @@ botonNuevo.addEventListener("click", () => {
 
 // Turno del croupier
 const turnoCroupier = () => {
+  botonNuevo.disabled = true;
   const pedirCartasCroupier = () => {
     setTimeout(() => {
       // Revelar carta oculta
@@ -353,6 +370,7 @@ const turnoCroupier = () => {
         } else {
           // Evaluar el resultado
           evaluarResultado();
+          botonNuevo.disabled = false;
         }
       }, 1000);
     }, 200);
